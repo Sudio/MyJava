@@ -9,22 +9,32 @@ import java.util.List;
  * Created by Flyme on 2016/5/5.
  */
 public class ProjectCodeLineCount {
+    public static final String JAVA = ".java";
+    public static final String C_LANGUAGE= ".c";
+    public static final String CPP = ".cpp";
+    public static final String JAVASCRIPT = ".js";
+    public static final String PYTHON = ".py";
+    public static final String HTML = ".html";
+    public static final String CSS = ".css";
 
-    public static int totalCodeLine(String path) throws IOException {
-        return countFile(getAllFileInDir(getJavaCodeLineCount(path)));
+    public static int totalCodeLine(String path,String programLanguage) throws IOException {
+        return countFile(getAllFileInDir(getDir(path),programLanguage));
     }
 
-    private static File getJavaCodeLineCount(String path) throws IOException {
+    public static int getTotalFile(String path,String programLanguage) throws IOException {
+        return getAllFileInDir(getDir(path),programLanguage).size();
+    }
+
+    private static File getDir(String path) throws IOException {
         File file = new File(path);
         if (file.exists()) {
-            List<File> files = getAllFileInDir(file);
             return file;
         } else {
             throw new IOException("Wrong path");
         }
     }
 
-    private static List<File> getAllFileInDir(File target) {
+    private static List<File> getAllFileInDir(File target,String programLanguage) {
         LinkedList<File> fileList = new LinkedList<>();
         LinkedList<File> dirs = new LinkedList<>();
         dirs.push(target);
@@ -33,7 +43,7 @@ public class ProjectCodeLineCount {
             File[] files = target.listFiles();
             for (File file : files) {
                 if (!file.isDirectory()) {
-                    if (file.getName().endsWith(".java"))
+                    if (file.getName().toLowerCase().endsWith(programLanguage))
                         fileList.push(file);
                 } else {
                     dirs.push(file);
@@ -53,7 +63,7 @@ public class ProjectCodeLineCount {
                 String s;
                 while ((s = br.readLine()) != null) {
                     //empty line won't be counted
-                    if (s.trim().length() != 0)
+                    if (s.trim().length() != 0 )
                         totalCount++;
                 }
             } catch (IOException e) {
@@ -63,4 +73,3 @@ public class ProjectCodeLineCount {
         return totalCount;
     }
 }
-
