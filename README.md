@@ -1,2 +1,2 @@
 # MyJava
-#ProjectCodeLineCount.totalCodeLine(String path) to count line in a directory.
+ProjectCodeLineCount.totalCodeLine(String path) to count line in a directory.
