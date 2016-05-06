@@ -1,0 +1,2 @@
+# MyJava
+some useful class
