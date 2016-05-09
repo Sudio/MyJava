@@ -56,9 +56,9 @@ public class ProjectCodeLineCount {
     private static int countFile(List<File> files) {
         int totalCount = 0;
         for (File file : files) {
-            try {
-                FileReader reader = new FileReader(file);
-                BufferedReader br = new BufferedReader(reader);
+            try (FileReader reader = new FileReader(file);
+                BufferedReader br = new BufferedReader(reader)){
+                
                 System.out.println("Loading file:[" + file.getName() + "]");
                 String s;
                 while ((s = br.readLine()) != null) {
